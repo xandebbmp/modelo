@@ -1,0 +1,8 @@
+{
+  "name": "BeautyFinance - Gestão & Lei Salão-Parceiro",
+  "description": "Sistema de gestão financeira e conformidade tributária para a Lei do Salão-Parceiro (Lei 13.352/2016), Simples Nacional, Anexos III/V, Fator R, Painel de Repasses dos MEIs e Consultoria Tributária com Gemini AI.",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}

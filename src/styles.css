@@ -1,0 +1,452 @@
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    --app-bg: #f8fafc;
+    --app-surface: #ffffff;
+    --app-text: #0f172a;
+    --app-secondary: #475569;
+    --app-muted: #94a3b8;
+    --app-border: #e2e8f0;
+  }
+
+  .dark {
+    --app-bg: #0b1726;
+    --app-surface: #132a42;
+    --app-text: #f8fafc;
+    --app-secondary: #94a3b8;
+    --app-muted: #64748b;
+    --app-border: #1e3f5e;
+  }
+
+  body {
+    background-color: var(--app-bg);
+    color: var(--app-text);
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  }
+}
+
+.bg-app-bg {
+  background-color: var(--app-bg);
+}
+
+.bg-surface {
+  background-color: var(--app-surface);
+}
+
+.text-app-text {
+  color: var(--app-text);
+}
+
+.text-app-secondary {
+  color: var(--app-secondary);
+}
+
+.text-app-muted {
+  color: var(--app-muted);
+}
+
+.border-app {
+  border-color: var(--app-border);
+}
+
+.card-corporate {
+  background-color: var(--app-surface);
+  border: 1px solid var(--app-border);
+  border-radius: 0.75rem;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.05);
+}
+
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.375rem;
+  background-color: #17324d;
+  color: #ffffff;
+  font-weight: 600;
+  padding: 0.5rem 0.875rem;
+  border-radius: 0.5rem;
+  transition: all 0.15s ease-in-out;
+  cursor: pointer;
+}
+
+.btn-primary:hover {
+  background-color: #204263;
+}
+
+.btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.375rem;
+  background-color: transparent;
+  color: var(--app-text);
+  border: 1px solid var(--app-border);
+  font-weight: 600;
+  padding: 0.5rem 0.875rem;
+  border-radius: 0.5rem;
+  transition: all 0.15s ease-in-out;
+  cursor: pointer;
+}
+
+.btn-secondary:hover {
+  background-color: rgba(0, 0, 0, 0.04);
+}
+
+.btn-accent {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.375rem;
+  background-color: #b66a3c;
+  color: #ffffff;
+  font-weight: 600;
+  padding: 0.5rem 0.875rem;
+  border-radius: 0.5rem;
+  transition: all 0.15s ease-in-out;
+  cursor: pointer;
+}
+
+.btn-accent:hover {
+  background-color: #9c542a;
+}
+
+.input-corporate {
+  width: 100%;
+  padding: 0.5rem 0.75rem;
+  background-color: var(--app-surface);
+  border: 1px solid var(--app-border);
+  border-radius: 0.375rem;
+  color: var(--app-text);
+  outline: none;
+}
+
+.input-corporate:focus {
+  border-color: #17324d;
+}
+
+.table-corporate {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+}
+
+.table-corporate th {
+  background-color: rgba(23, 50, 77, 0.04);
+  color: var(--app-secondary);
+  font-weight: 700;
+  padding: 0.625rem 0.875rem;
+  border-bottom: 1px solid var(--app-border);
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.table-corporate td {
+  padding: 0.75rem 0.875rem;
+  border-bottom: 1px solid var(--app-border);
+}
+
+.status-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.15rem 0.5rem;
+  border-radius: 9999px;
+  font-weight: 700;
+  font-size: 0.6875rem;
+}
+
+.status-badge-success {
+  background-color: #dcfce7;
+  color: #15803d;
+  border: 1px solid #bbf7d0;
+}
+
+.status-badge-warning {
+  background-color: #fef3c7;
+  color: #b45309;
+  border: 1px solid #fde68a;
+}
+
+.status-badge-neutral {
+  background-color: #f1f5f9;
+  color: #475569;
+  border: 1px solid #e2e8f0;
+}
+
+/* ==========================================================================
+   TRANSIÇÕES SUAVES & ANIMAÇÕES DE INTERFACE (Dashboard & Visualizadores)
+   ========================================================================== */
+
+@keyframes tabFadeSlideIn {
+  0% {
+    opacity: 0;
+    transform: translateY(12px) scale(0.992);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes fadeInSmooth {
+  0% {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes barGrowUp {
+  0% {
+    transform: scaleY(0);
+    transform-origin: bottom;
+  }
+  100% {
+    transform: scaleY(1);
+    transform-origin: bottom;
+  }
+}
+
+@keyframes cardSlideFadeUp {
+  0% {
+    opacity: 0;
+    transform: translateY(16px) scale(0.985);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.animate-tab-enter {
+  animation: tabFadeSlideIn 0.32s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  will-change: transform, opacity;
+}
+
+.animate-fade-in {
+  animation: fadeInSmooth 0.25s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.animate-bar-grow {
+  animation: barGrowUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.animate-card-stagger-1 {
+  animation: cardSlideFadeUp 0.4s cubic-bezier(0.16, 1, 0.3, 1) 0.05s both;
+  will-change: transform, opacity;
+}
+
+.animate-card-stagger-2 {
+  animation: cardSlideFadeUp 0.4s cubic-bezier(0.16, 1, 0.3, 1) 0.12s both;
+  will-change: transform, opacity;
+}
+
+.animate-card-stagger-3 {
+  animation: cardSlideFadeUp 0.4s cubic-bezier(0.16, 1, 0.3, 1) 0.19s both;
+  will-change: transform, opacity;
+}
+
+/* ==========================================================================
+   REGRAS ESPECÍFICAS DE IMPRESSÃO (@media print)
+   Otimização para Impressão de Comprovantes de Repasse, Extratos e Relatórios
+   Conforme Lei 13.352/2016 (Salão-Parceiro)
+   ========================================================================== */
+
+.print-only {
+  display: none !important;
+}
+
+@media print {
+  /* Configuração Geral da Página A4 / Carta */
+  @page {
+    size: A4 portrait;
+    margin: 12mm 15mm 12mm 15mm;
+  }
+
+  /* Reset de Cores e Fundo para Economia de Tinta e Alta Legibilidade */
+  *,
+  *::before,
+  *::after {
+    background-color: transparent !important;
+    color: #000000 !important;
+    box-shadow: none !important;
+    text-shadow: none !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  html,
+  body {
+    background: #ffffff !important;
+    color: #0f172a !important;
+    font-size: 11pt !important;
+    line-height: 1.4 !important;
+    width: 100% !important;
+    height: auto !important;
+    overflow: visible !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  /* Oculta Menus Laterais, Cabeçalhos e Barras de Navegação */
+  header,
+  aside,
+  nav,
+  button,
+  .no-print,
+  .btn-primary,
+  .btn-secondary,
+  .btn-accent,
+  app-simulador-mobile-mei,
+  #select-parceiro-filtro,
+  #select-ano-filtro,
+  #select-mes-filtro,
+  input,
+  select,
+  textarea {
+    display: none !important;
+    visibility: hidden !important;
+  }
+
+  /* Exibe elementos marcados como exclusivos para impressão */
+  .print-only {
+    display: block !important;
+    visibility: visible !important;
+  }
+
+  /* Ajuste de Estrutura do Layout Principal */
+  .min-h-screen,
+  .flex-1,
+  main {
+    display: block !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    overflow: visible !important;
+    height: auto !important;
+  }
+
+  /* Modais / Comprovantes de Repasse (Expandir e Ocupar a Página Toda sem Scroll) */
+  .fixed.inset-0,
+  .fixed.inset-0.z-50 {
+    position: static !important;
+    display: block !important;
+    background: transparent !important;
+    backdrop-filter: none !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    height: auto !important;
+    overflow: visible !important;
+  }
+
+  .card-corporate {
+    background: #ffffff !important;
+    border: 1px solid #cbd5e1 !important;
+    border-radius: 6px !important;
+    box-shadow: none !important;
+    padding: 12px !important;
+    break-inside: avoid !important;
+    page-break-inside: avoid !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    max-height: none !important;
+    overflow: visible !important;
+  }
+
+  /* Tabelas Corporativas Prontas para Impressão */
+  .table-corporate {
+    width: 100% !important;
+    border-collapse: collapse !important;
+    font-size: 9.5pt !important;
+  }
+
+  .table-corporate thead {
+    display: table-header-group !important;
+  }
+
+  .table-corporate tr {
+    page-break-inside: avoid !important;
+    break-inside: avoid !important;
+  }
+
+  .table-corporate th {
+    background-color: #f1f5f9 !important;
+    color: #1e293b !important;
+    font-weight: 700 !important;
+    border: 1px solid #cbd5e1 !important;
+    padding: 6px 8px !important;
+    font-size: 8.5pt !important;
+  }
+
+  .table-corporate td {
+    border: 1px solid #e2e8f0 !important;
+    padding: 6px 8px !important;
+    color: #0f172a !important;
+  }
+
+  .table-corporate tfoot tr {
+    background-color: #f8fafc !important;
+    font-weight: bold !important;
+    border-top: 2px solid #94a3b8 !important;
+  }
+
+  /* Badges e Status em Preto/Cinza com Borda Nítida */
+  .status-badge,
+  .status-badge-success,
+  .status-badge-warning,
+  .status-badge-danger,
+  .status-badge-neutral {
+    background: transparent !important;
+    border: 1px solid #475569 !important;
+    color: #0f172a !important;
+    font-weight: 700 !important;
+    font-size: 8pt !important;
+    padding: 2px 6px !important;
+  }
+
+  /* Otimização Específica do Comprovante de Repasse e DANFSE */
+  #comprovante-print-area,
+  #modal-detalhe-fechamento {
+    width: 100% !important;
+    max-width: 100% !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    overflow: visible !important;
+    font-size: 10pt !important;
+  }
+
+  /* Evitar Quebra Indesejada de Blocos e Seções */
+  .print-avoid-break,
+  .grid,
+  .space-y-4 > * {
+    break-inside: avoid !important;
+    page-break-inside: avoid !important;
+  }
+
+  /* Destaque de Valores Monetários em Negrito para Fácil Leitura */
+  .font-mono,
+  .font-bold,
+  .font-black {
+    font-weight: 700 !important;
+  }
+
+  /* Ocultar links desnecessários ou URLs automáticas */
+  a[href]:after {
+    content: "" !important;
+  }
+
+  /* Rodapé / Assinatura do Comprovante de Repasse */
+  .print-assinaturas {
+    display: flex !important;
+    justify-content: space-between !important;
+    margin-top: 40px !important;
+    padding-top: 20px !important;
+    page-break-inside: avoid !important;
+  }
+}
+

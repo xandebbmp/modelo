@@ -1,0 +1,201 @@
+<div class="min-h-screen flex flex-col bg-app-bg text-app-text font-sans antialiased" [class.dark]="darkMode()">
+  
+  <!-- BARRA SUPERIOR DE NAVEGAÇÃO / HEADER -->
+  <header class="h-16 border-b border-app bg-surface px-4 lg:px-6 flex items-center justify-between sticky top-0 z-30 shadow-xs">
+    
+    <div class="flex items-center gap-3">
+      <button 
+        type="button" 
+        (click)="toggleSidebar()" 
+        class="p-2 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 text-app-secondary lg:hidden">
+        <mat-icon>menu</mat-icon>
+      </button>
+
+      <div class="flex items-center gap-2.5">
+        <div class="w-9 h-9 rounded-xl bg-gradient-to-br from-[#17324d] to-[#2b5177] text-white flex items-center justify-center shadow-sm">
+          <mat-icon class="text-xl">spa</mat-icon>
+        </div>
+        <div>
+          <span class="font-bold text-sm sm:text-base tracking-tight text-app-text block leading-none">
+            BeautyFinance
+          </span>
+          <span class="text-[10px] text-app-muted font-medium tracking-wide">
+            Salão-Parceiro • Lei 13.352/2016
+          </span>
+        </div>
+      </div>
+    </div>
+
+    <!-- INFORMAÇÕES DA EMPRESA & AÇÕES GLOBAIS -->
+    <div class="flex items-center gap-3">
+      
+      <!-- Card Compacto da Empresa Selecionada -->
+      <div class="hidden sm:flex items-center gap-2 px-3 py-1.5 rounded-lg bg-slate-100/70 dark:bg-[#152e47] border border-app text-xs">
+        <mat-icon class="text-[#17324d] dark:text-blue-300 text-base">store</mat-icon>
+        <div class="text-left">
+          <span class="font-bold text-app-text block leading-none truncate max-w-[180px]">{{ empresa().nome_fantasia }}</span>
+          <span class="font-mono text-[10px] text-app-muted">{{ empresa().cnpj }}</span>
+        </div>
+      </div>
+
+      <!-- Botão Tour Guiado -->
+      <button 
+        type="button" 
+        (click)="tourService.iniciarTour()" 
+        class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-blue-50 dark:bg-blue-950/40 text-[#17324d] dark:text-blue-300 border border-blue-200 dark:border-blue-800 text-xs font-bold hover:bg-blue-100 transition-all cursor-pointer"
+        id="btn-iniciar-tour-header"
+        title="Tour Guiado do Sistema (Novos Usuários)">
+        <mat-icon class="text-sm text-blue-600 dark:text-blue-400">help_outline</mat-icon>
+        <span class="hidden sm:inline">Tour Guiado</span>
+      </button>
+
+      <!-- Botão Visão Mobile MEI -->
+      <button 
+        type="button" 
+        (click)="financeState.modoSimuladorMobile.set(true)"
+        class="hidden md:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-emerald-50 dark:bg-emerald-950/40 text-emerald-700 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-800 text-xs font-bold hover:bg-emerald-100 transition-all">
+        <mat-icon class="text-sm">smartphone</mat-icon>
+        <span>App Parceiro</span>
+      </button>
+
+      <!-- Toggle Dark Mode -->
+      <button 
+        type="button" 
+        (click)="toggleDarkMode()" 
+        class="p-2 rounded-lg hover:bg-slate-100 dark:hover:bg-slate-800 text-app-secondary transition-colors"
+        [title]="darkMode() ? 'Ativar Modo Claro' : 'Ativar Modo Escuro'">
+        <mat-icon>{{ darkMode() ? 'light_mode' : 'dark_mode' }}</mat-icon>
+      </button>
+    </div>
+
+  </header>
+
+  <!-- CORPO PRINCIPAL COM SIDEBAR E CONTEÚDO -->
+  <div class="flex-1 flex overflow-hidden">
+    
+    <!-- SIDEBAR DE NAVEGAÇÃO -->
+    <aside 
+      class="w-64 bg-surface border-r border-app flex flex-col justify-between shrink-0 transition-all duration-200 z-20"
+      [class.hidden]="!sidebarAberta()"
+      [class.block]="sidebarAberta()">
+      
+      <div class="p-4 space-y-6">
+        
+        <!-- Menu Principal -->
+        <div class="space-y-1">
+          <div class="px-3 py-1 text-[10px] font-bold uppercase tracking-wider text-app-muted">
+            Gestão & Conformidade
+          </div>
+
+          <a 
+            routerLink="/dashboard" 
+            routerLinkActive="bg-[#17324d] text-white dark:bg-blue-600 font-bold"
+            [routerLinkActiveOptions]="{ exact: true }"
+            class="flex items-center gap-2.5 px-3 py-2 rounded-lg text-xs text-app-secondary hover:text-app-text hover:bg-slate-100 dark:hover:bg-slate-800 transition-all">
+            <mat-icon class="text-base">dashboard</mat-icon>
+            <span>Dashboard Geral</span>
+          </a>
+
+          <a 
+            routerLink="/painel-parceiros" 
+            routerLinkActive="bg-[#17324d] text-white dark:bg-blue-600 font-bold"
+            class="flex items-center gap-2.5 px-3 py-2 rounded-lg text-xs text-app-secondary hover:text-app-text hover:bg-slate-100 dark:hover:bg-slate-800 transition-all relative">
+            <mat-icon class="text-base text-amber-500">badge</mat-icon>
+            <span class="flex-1">Painel do Parceiro MEI</span>
+            <span class="px-1.5 py-0.2 rounded-full bg-amber-100 dark:bg-amber-950 text-amber-800 dark:text-amber-300 text-[9px] font-bold">Novo</span>
+          </a>
+
+          <a 
+            routerLink="/parceiros" 
+            routerLinkActive="bg-[#17324d] text-white dark:bg-blue-600 font-bold"
+            class="flex items-center gap-2.5 px-3 py-2 rounded-lg text-xs text-app-secondary hover:text-app-text hover:bg-slate-100 dark:hover:bg-slate-800 transition-all">
+            <mat-icon class="text-base">groups</mat-icon>
+            <span>Profissionais MEI</span>
+          </a>
+
+          <a 
+            routerLink="/fechamentos" 
+            routerLinkActive="bg-[#17324d] text-white dark:bg-blue-600 font-bold"
+            class="flex items-center gap-2.5 px-3 py-2 rounded-lg text-xs text-app-secondary hover:text-app-text hover:bg-slate-100 dark:hover:bg-slate-800 transition-all">
+            <mat-icon class="text-base">calculate</mat-icon>
+            <span>Fechamentos & Cotas</span>
+          </a>
+
+          <a 
+            routerLink="/relatorio-repasse" 
+            routerLinkActive="bg-[#17324d] text-white dark:bg-blue-600 font-bold"
+            class="flex items-center gap-2.5 px-3 py-2 rounded-lg text-xs text-app-secondary hover:text-app-text hover:bg-slate-100 dark:hover:bg-slate-800 transition-all">
+            <mat-icon class="text-base text-emerald-600 dark:text-emerald-400">payments</mat-icon>
+            <span class="flex-1">Relatório de Repasse</span>
+            <span class="px-1.5 py-0.2 rounded-full bg-emerald-100 dark:bg-emerald-950 text-emerald-800 dark:text-emerald-300 text-[9px] font-bold">Taxas</span>
+          </a>
+
+          <a 
+            routerLink="/notas-fiscais" 
+            routerLinkActive="bg-[#17324d] text-white dark:bg-blue-600 font-bold"
+            class="flex items-center gap-2.5 px-3 py-2 rounded-lg text-xs text-app-secondary hover:text-app-text hover:bg-slate-100 dark:hover:bg-slate-800 transition-all">
+            <mat-icon class="text-base">receipt_long</mat-icon>
+            <span>Notas Fiscais (NFS-e)</span>
+          </a>
+        </div>
+
+        <!-- Menu Sistema -->
+        <div class="space-y-1">
+          <div class="px-3 py-1 text-[10px] font-bold uppercase tracking-wider text-app-muted">
+            Configurações
+          </div>
+
+          <a 
+            routerLink="/configuracoes" 
+            routerLinkActive="bg-[#17324d] text-white dark:bg-blue-600 font-bold"
+            class="flex items-center gap-2.5 px-3 py-2 rounded-lg text-xs text-app-secondary hover:text-app-text hover:bg-slate-100 dark:hover:bg-slate-800 transition-all">
+            <mat-icon class="text-base">settings</mat-icon>
+            <span>Parâmetros Fiscais</span>
+          </a>
+
+          <button 
+            type="button" 
+            (click)="tourService.iniciarTour()" 
+            class="w-full flex items-center gap-2.5 px-3 py-2 rounded-lg text-xs text-blue-700 dark:text-blue-300 hover:bg-blue-50 dark:hover:bg-blue-950/50 transition-all cursor-pointer font-medium"
+            id="btn-iniciar-tour-sidebar">
+            <mat-icon class="text-base text-blue-600 dark:text-blue-400">help_outline</mat-icon>
+            <span>Tour Guiado Inicial</span>
+          </button>
+        </div>
+
+      </div>
+
+      <!-- Rodapé da Sidebar: Status de Conformidade -->
+      <div class="p-4 border-t border-app">
+        <div class="p-3 rounded-lg bg-emerald-50 dark:bg-emerald-950/30 border border-emerald-200 dark:border-emerald-900 flex items-center gap-2">
+          <mat-icon class="text-emerald-600 text-sm">verified</mat-icon>
+          <div class="text-[10px] text-emerald-800 dark:text-emerald-300">
+            <span class="font-bold block">100% em Conformidade</span>
+            Lei 13.352 e Simples Nacional
+          </div>
+        </div>
+      </div>
+
+    </aside>
+
+    <!-- ÁREA DE CONTEÚDO PRINCIPAL -->
+    <main class="flex-1 overflow-y-auto p-4 sm:p-6 lg:p-8">
+      <div class="max-w-7xl mx-auto">
+        <router-outlet></router-outlet>
+      </div>
+    </main>
+
+  </div>
+
+  <!-- SIMULADOR MOBILE DO PARCEIRO MEI -->
+  @if (financeState.modoSimuladorMobile()) {
+    <app-simulador-mobile-mei></app-simulador-mobile-mei>
+  }
+
+  <!-- TOUR GUIADO PARA NOVOS USUÁRIOS -->
+  <app-tour-guiado></app-tour-guiado>
+
+  <!-- MODAL DE DIÁLOGO DE CONFIRMAÇÃO GLOBAL -->
+  <app-confirm-dialog></app-confirm-dialog>
+
+</div>
